@@ -1,6 +1,5 @@
 package org.example.project
 
-import PlatformInfo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,10 +10,9 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -22,37 +20,36 @@ import co.touchlab.kermit.Logger
 
 @Composable
 fun App() {
-    // Використовуємо нашу кастомну тему
-    AppTheme {
-        var showContent by remember { mutableStateOf(false) }
+    // 1. Ініціалізуємо ViewModel
+    val viewModel = remember { AboutViewModel() }
 
+    // 2. Спостерігаємо за станом даних із ViewModel
+    val platformData by viewModel.platformInfo.collectAsState()
+
+    AppTheme {
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            // Виклик нашого Platform-specific API (Лаб 6)
-            val platform = PlatformInfo()
-
             Text(
-                text = "Лабораторна робота №6",
+                text = "Лабораторна робота №7",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
+            // 3. Використовуємо дані, які постачає ViewModel
             Text(
-                text = "Поточна система: ${platform.osName} ${platform.osVersion}",
+                text = "Поточна система: $platformData",
                 style = MaterialTheme.typography.bodyMedium
             )
 
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(onClick = {
-                showContent = !showContent
-                // Виклик логера Kermit (Лаб 6)
-                Logger.i("Lab6") { "Кнопка натиснута! Статус: $showContent" }
+                Logger.i("Lab7") { "Дані на екрані: $platformData" }
             }) {
                 Text("Записати в лог")
             }
