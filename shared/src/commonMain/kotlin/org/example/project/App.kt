@@ -12,18 +12,16 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import co.touchlab.kermit.Logger
+import org.koin.compose.koinInject
 
 @Composable
 fun App() {
-    // 1. Ініціалізуємо ViewModel
-    val viewModel = remember { AboutViewModel() }
+    val viewModel = koinInject<AboutViewModel>()
 
-    // 2. Спостерігаємо за станом даних із ViewModel
     val platformData by viewModel.platformInfo.collectAsState()
 
     AppTheme {
@@ -33,14 +31,13 @@ fun App() {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Лабораторна робота №7",
+                text = "Лабораторна робота",
                 style = MaterialTheme.typography.titleLarge,
                 color = MaterialTheme.colorScheme.primary
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // 3. Використовуємо дані, які постачає ViewModel
             Text(
                 text = "Поточна система: $platformData",
                 style = MaterialTheme.typography.bodyMedium
@@ -49,7 +46,7 @@ fun App() {
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(onClick = {
-                Logger.i("Lab7") { "Дані на екрані: $platformData" }
+                Logger.i("LabDI") { "Дані на екрані: $platformData" }
             }) {
                 Text("Записати в лог")
             }

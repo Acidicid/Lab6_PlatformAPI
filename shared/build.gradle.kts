@@ -59,7 +59,9 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation("co.touchlab:kermit:2.0.3")
+            implementation("co.touchlab:kermit:2.1.0")
+            api("io.insert-koin:koin-core:4.2.2")
+            implementation("io.insert-koin:koin-compose:4.2.2")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
