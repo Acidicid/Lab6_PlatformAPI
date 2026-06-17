@@ -62,6 +62,9 @@ kotlin {
             implementation("co.touchlab:kermit:2.1.0")
             api("io.insert-koin:koin-core:4.2.2")
             implementation("io.insert-koin:koin-compose:4.2.2")
+            implementation("com.russhwolf:multiplatform-settings:1.3.0")
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
+            implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.8.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

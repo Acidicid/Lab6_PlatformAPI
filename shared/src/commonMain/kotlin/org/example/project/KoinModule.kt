@@ -1,17 +1,21 @@
 package org.example.project
 
 import PlatformInfo
+import com.russhwolf.settings.Settings
 import org.koin.core.context.startKoin
 import org.koin.dsl.module
 
-// Граф залежностей
 val appModule = module {
-    single { PlatformInfo() } // Створюємо PlatformInfo в єдиному екземплярі
-    single<PlatformRepository> { PlatformRepositoryImpl(get()) } // Передаємо PlatformInfo в репозиторій
-    factory { AboutViewModel(get()) } // Передаємо репозиторій у ViewModel
+    single { PlatformInfo() }
+
+    // Додаємо створення Settings
+    single<Settings> { Settings() }
+
+    // Додаємо get() для Settings у репозиторій
+    single<PlatformRepository> { PlatformRepositoryImpl(get(), get()) }
+    factory { AboutViewModel(get()) }
 }
 
-// Загальна функція для ініціалізації
 fun initKoin() {
     startKoin {
         modules(appModule)
